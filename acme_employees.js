@@ -17,6 +17,67 @@ const employees = [
     console.log(`${stars} ${text} ${stars}`);
   }
   
+const findEmployeeByName = (name, list) => {
+  for (let i in list) {
+    if (list[i].name === name) {
+      return list[i];
+    }
+  }
+  return {};
+};
+
+const findManagerFor = (employee, list) => {
+  for (let i in list) {
+    if (list[i].id === employee.managerId) {
+      return list[i];
+    }
+  }
+  return {};
+};
+
+const findCoworkersFor = (employee, list) => {
+  return list.reduce((accum, item) => {
+    if (item.managerId === employee.managerId && item.id !== employee.id) {
+      accum.push(item);
+    }
+    return accum;
+  }, []);
+};
+
+const findManagementChainForEmployee = (employee, list) => {
+  return findManagementChain(employee, list).reverse();
+};
+
+const findManagementChain = (employee, list) => {
+  if (!employee.managerId) {
+    return [];
+  }
+  let manager = findManagerFor(employee, list);
+  return [manager].concat(findManagementChain(manager, list));
+};
+
+/*************/
+const generateManagementTree = (list) => {
+  for (let employee in list) {
+    if (!list[employee].managerId) {
+      let topLevel = employees[i];
+      break;
+    }
+  }
+  
+  topLevel['reports'] = findUnderlings(topLevel, list);
+  return topLevel;
+}
+
+const findUnderlings = (manager, list) => {
+  let tree = [];
+  list.filter()
+}
+
+const displayManagementTree = () => {
+  
+}
+
   spacer('findEmployeeByName Moe')
   // given a name and array of employees, return employee
   console.log(findEmployeeByName('moe', employees));//{ id: 1, name: 'moe' }
